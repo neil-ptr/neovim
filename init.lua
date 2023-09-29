@@ -304,7 +304,6 @@ vim.o.smartcase = true
 
 -- idk primagen
 vim.o.scrolloff = 8
-vim.o.colorcolumn = "80"
 
 -- Keep signcolumn on by default
 vim.wo.signcolumn = 'yes'
