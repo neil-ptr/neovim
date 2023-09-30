@@ -116,9 +116,9 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',    opts = {} },
+  { 'folke/which-key.nvim',   opts = {} },
 
-  { "sindrets/diffview.nvim",  opts = {} },
+  { "sindrets/diffview.nvim", opts = {} },
 
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
@@ -162,13 +162,18 @@ require('lazy').setup({
     },
   },
 
+  -- {
+  --   -- Theme inspired by Atom
+  --   'navarasu/onedark.nvim',
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'onedark'
+  --   end,
+  -- },
   {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+    "catppuccin/nvim",
+    name = "catppuccin",
     priority = 1000,
-    config = function()
-      vim.cmd.colorscheme 'onedark'
-    end,
   },
 
   {
@@ -178,7 +183,7 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'onedark',
+        theme = 'catppuccin',
         component_separators = '|',
         section_separators = '',
       },
@@ -352,6 +357,13 @@ require("bufferline").setup {
   }
 }
 
+-- colorscheme
+require("catppuccin").setup({
+    flavour = "mocha", -- latte, frappe, macchiato, mocha
+})
+
+vim.cmd.colorscheme "catppuccin"
+
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
@@ -365,8 +377,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- Nvim.tree
 vim.api.nvim_set_keymap('n', '<Leader>e', ':NvimTreeToggle<CR>', { noremap = true, desc = 'Toggle file tree' })
-vim.api.nvim_set_keymap('n', '<S-i>', ':bnext<CR>', { silent = true })
-vim.api.nvim_set_keymap('n', '<S-h>', ':bprev<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '<S-,>', ':bprev<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '<S-.>', ':bnext<CR>', { silent = true })
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
@@ -378,6 +390,7 @@ require('telescope').setup {
         ['<C-d>'] = false,
       },
     },
+    dynamic_preview_title = true,
   },
 }
 
