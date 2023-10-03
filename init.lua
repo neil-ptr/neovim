@@ -161,21 +161,14 @@ require('lazy').setup({
       },
     },
   },
-
-  -- {
-  --   -- Theme inspired by Atom
-  --   'navarasu/onedark.nvim',
-  --   priority = 1000,
-  --   config = function()
-  --     vim.cmd.colorscheme 'onedark'
-  --   end,
-  -- },
   {
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000,
   },
-
+  {
+    "github/copilot.vim",
+  },
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -209,7 +202,7 @@ require('lazy').setup({
     config = {
       open_mapping = [[<c-\>]],
       persist_mode = true,
-      shading_factor = 1,
+      shading_factor = 1
     }
   },
 
@@ -242,17 +235,17 @@ require('lazy').setup({
       },
     },
   },
-  {
-    "nvim-tree/nvim-tree.lua",
-    version = "*",
-    lazy = false,
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
-    config = function()
-      require("nvim-tree").setup {}
-    end,
-  },
+  -- {
+  --   "nvim-tree/nvim-tree.lua",
+  --   version = "*",
+  --   lazy = false,
+  --   dependencies = {
+  --     "nvim-tree/nvim-web-devicons",
+  --   },
+  --   config = function()
+  --     require("nvim-tree").setup {}
+  --   end,
+  -- },
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -274,7 +267,7 @@ require('lazy').setup({
   --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {})
 
 -- [[ Setting options ]]
@@ -350,7 +343,7 @@ require("bufferline").setup {
   options = {
     hover = {
       enabled = true,
-      delay = 200,
+      delay = 100,
       reveal = { 'close' }
     },
     separator_style = "slant"
@@ -359,10 +352,21 @@ require("bufferline").setup {
 
 -- colorscheme
 require("catppuccin").setup({
-    flavour = "mocha", -- latte, frappe, macchiato, mocha
+  flavour = "mocha",   -- latte, frappe, macchiato, mocha
+})
+vim.cmd.colorscheme "catppuccin"
+
+require("toggleterm").setup({
+  shade_terminals = false,
+  highlights = {
+    Normal = {
+      guibg = "NONE"
+    }
+  }
 })
 
-vim.cmd.colorscheme "catppuccin"
+vim.cmd('hi Normal guibg=NONE ctermbg=NONE') -- Set the background to transparent
+vim.cmd('hi NormalNC guibg=NONE ctermbg=NONE') -- Set the background to transparent
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -376,9 +380,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Nvim.tree
-vim.api.nvim_set_keymap('n', '<Leader>e', ':NvimTreeToggle<CR>', { noremap = true, desc = 'Toggle file tree' })
-vim.api.nvim_set_keymap('n', '<S-,>', ':bprev<CR>', { silent = true })
-vim.api.nvim_set_keymap('n', '<S-.>', ':bnext<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>e', ':Neotree toggle<CR>', { noremap = true, desc = 'Toggle file tree' })
+vim.api.nvim_set_keymap('n', '<c-,>', ':bprev<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '<c-.>', ':bnext<CR>', { silent = true })
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
