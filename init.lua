@@ -195,17 +195,6 @@ require('lazy').setup({
       }
     end,
   },
-
-  {
-    'akinsho/toggleterm.nvim',
-    version = "*",
-    config = {
-      open_mapping = [[<c-\>]],
-      persist_mode = true,
-      shading_factor = 1
-    }
-  },
-
   {
     'akinsho/bufferline.nvim',
     version = "*",
@@ -213,7 +202,7 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',  opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   {
@@ -235,17 +224,6 @@ require('lazy').setup({
       },
     },
   },
-  -- {
-  --   "nvim-tree/nvim-tree.lua",
-  --   version = "*",
-  --   lazy = false,
-  --   dependencies = {
-  --     "nvim-tree/nvim-web-devicons",
-  --   },
-  --   config = function()
-  --     require("nvim-tree").setup {}
-  --   end,
-  -- },
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -253,6 +231,9 @@ require('lazy').setup({
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
     build = ':TSUpdate',
+  },
+  {
+    'christoomey/vim-tmux-navigator'
   },
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
@@ -327,18 +308,6 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
--- Move between splits in Normal mode
-vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', { noremap = true })
-
--- Move between splits in Terminal mode
-vim.api.nvim_set_keymap('t', '<C-j>', '<C-\\><C-n><C-w>j', { noremap = true })
-vim.api.nvim_set_keymap('t', '<C-k>', '<C-\\><C-n><C-w>k', { noremap = true })
-vim.api.nvim_set_keymap('t', '<C-l>', '<C-\\><C-n><C-w>l', { noremap = true })
-vim.api.nvim_set_keymap('t', '<C-h>', '<C-\\><C-n><C-w>h', { noremap = true })
-
 require("bufferline").setup {
   options = {
     hover = {
@@ -352,20 +321,11 @@ require("bufferline").setup {
 
 -- colorscheme
 require("catppuccin").setup({
-  flavour = "mocha",   -- latte, frappe, macchiato, mocha
+  flavour = "mocha", -- latte, frappe, macchiato, mocha
 })
 vim.cmd.colorscheme "catppuccin"
 
-require("toggleterm").setup({
-  shade_terminals = false,
-  highlights = {
-    Normal = {
-      guibg = "NONE"
-    }
-  }
-})
-
-vim.cmd('hi Normal guibg=NONE ctermbg=NONE') -- Set the background to transparent
+vim.cmd('hi Normal guibg=NONE ctermbg=NONE')   -- Set the background to transparent
 vim.cmd('hi NormalNC guibg=NONE ctermbg=NONE') -- Set the background to transparent
 
 -- [[ Highlight on yank ]]
@@ -419,6 +379,19 @@ vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { de
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').live_grep, { desc = '[S]earch by [F]iles with grep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
+
+-- lualine config
+require('lualine').setup {
+  sections = {
+    lualine_c = {
+      {
+        'filename',
+        path = 1
+      }
+    }
+  }
+
+}
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
