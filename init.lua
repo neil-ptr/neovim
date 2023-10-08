@@ -162,10 +162,12 @@ require('lazy').setup({
     },
   },
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    priority = 1000,
+    'ThePrimeagen/harpoon',
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
   },
+  { 'rose-pine/neovim',      name = 'rose-pine', priority = 1000 },
   {
     "github/copilot.vim",
   },
@@ -176,13 +178,12 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'catppuccin',
+        theme = 'rose-pine',
         component_separators = '|',
         section_separators = '',
       },
     },
   },
-
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
@@ -202,7 +203,7 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',  opts = {} },
+  { 'numToStr/Comment.nvim', opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   {
@@ -256,7 +257,6 @@ require('lazy').setup({
 -- NOTE: You can change these options as you wish!
 
 -- Set highlight on search
--- vim.o.hlsearch = false
 vim.api.nvim_set_keymap('n', '<CR>', ':noh<CR><CR>', { noremap = true })
 
 -- Make line numbers default
@@ -315,18 +315,15 @@ require("bufferline").setup {
       delay = 100,
       reveal = { 'close' }
     },
-    separator_style = "slant"
+    separator_style = "thin"
   }
 }
 
 -- colorscheme
-require("catppuccin").setup({
-  flavour = "mocha", -- latte, frappe, macchiato, mocha
-})
-vim.cmd.colorscheme "catppuccin"
+vim.cmd.colorscheme "rose-pine"
 
-vim.cmd('hi Normal guibg=NONE ctermbg=NONE')   -- Set the background to transparent
-vim.cmd('hi NormalNC guibg=NONE ctermbg=NONE') -- Set the background to transparent
+-- vim.cmd('hi Normal guibg=NONE ctermbg=NONE')   -- Set the background to transparent
+-- vim.cmd('hi NormalNC guibg=NONE ctermbg=NONE') -- Set the background to transparent
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -340,9 +337,21 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Nvim.tree
-vim.api.nvim_set_keymap('n', '<Leader>e', ':Neotree toggle<CR>', { noremap = true, desc = 'Toggle file tree' })
-vim.api.nvim_set_keymap('n', '<c-,>', ':bprev<CR>', { silent = true })
-vim.api.nvim_set_keymap('n', '<c-.>', ':bnext<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>t', ':Neotree toggle<CR>', { noremap = true, desc = 'Toggle file tree' })
+
+-- next and prev buffers
+vim.api.nvim_set_keymap('n', '<C-,>', ':bprev<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-.>', ':bnext<CR>', { noremap = true, silent = true })
+
+-- harpoon config
+local mark = require("harpoon.mark")
+local ui = require("harpoon.ui")
+vim.keymap.set("n", "<leader>a", mark.add_file, { desc = "[a]dd file to marks" })
+vim.keymap.set("n", "<leader>e", ui.toggle_quick_menu, { desc = "Toggle harpoon" })
+vim.keymap.set("n", "<C-m>", function() ui.nav_file(1) end, { desc = "Harpoon nav to 1 file" })
+vim.keymap.set("n", "<C-t>", function() ui.nav_file(2) end, { desc = "Harpoon nav to 2 file" })
+vim.keymap.set("n", "<C-n>", function() ui.nav_file(3) end, { desc = "Harpoon nav to 3 file" })
+vim.keymap.set("n", "<C-s>", function() ui.nav_file(4) end, { desc = "Harpoon nav to 4 file" })
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
@@ -448,13 +457,13 @@ require('nvim-treesitter.configs').setup {
       },
     },
     swap = {
-      enable = true,
-      swap_next = {
-        ['<leader>a'] = '@parameter.inner',
-      },
-      swap_previous = {
-        ['<leader>A'] = '@parameter.inner',
-      },
+      -- enable = true,
+      -- swap_next = {
+      --   ['<leader>a'] = '@parameter.inner',
+      -- },
+      -- swap_previous = {
+      --   ['<leader>A'] = '@parameter.inner',
+      -- },
     },
   },
 }
@@ -499,7 +508,7 @@ local on_attach = function(_, bufnr)
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  nmap('<C-K>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -571,6 +580,7 @@ local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
 
+---@diagnostic disable-next-line: missing-fields
 cmp.setup {
   snippet = {
     expand = function(args)

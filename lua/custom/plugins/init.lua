@@ -3,7 +3,7 @@
 --
 -- See the kickstart.nvim README for more information
 return {
- "windwp/nvim-autopairs",
+  "windwp/nvim-autopairs",
   -- Optional dependency
   dependencies = { 'hrsh7th/nvim-cmp' },
   config = function()
