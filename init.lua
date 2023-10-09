@@ -243,7 +243,7 @@ require('lazy').setup({
       "nvim-treesitter/nvim-treesitter",
     },
     config = function()
-      require("refactoring").setup()
+      require("refactoring").setup({})
     end,
   },
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
@@ -411,6 +411,20 @@ require('lualine').setup {
 
 }
 
+-- refactoring
+vim.keymap.set("x", "<leader>rff", function() require('refactoring').refactor('Extract Function') end)
+vim.keymap.set("x", "<leader>rfF", function() require('refactoring').refactor('Extract Function To File') end)
+-- Extract function supports only visual mode
+vim.keymap.set("x", "<leader>rfv", function() require('refactoring').refactor('Extract Variable') end)
+-- Extract variable supports only visual ode
+vim.keymap.set("n", "<leader>rfI", function() require('refactoring').refactor('Inline Function') end)
+-- Inline func supports only normal
+vim.keymap.set({ "n", "x" }, "<leader>rfi", function() require('refactoring').refactor('Inline Variable') end)
+-- Inline var supports both normal and visual mode
+vim.keymap.set("n", "<leader>rfb", function() require('refactoring').refactor('Extract Block') end)
+vim.keymap.set("n", "<leader>rfbf", function() require('refactoring').refactor('Extract Block To File') end)
+-- Extract block supports only normal mode
+
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
@@ -517,7 +531,7 @@ local on_attach = function(_, bufnr)
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-K>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  nmap('<C-S-K>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
