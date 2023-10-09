@@ -312,6 +312,8 @@ vim.o.termguicolors = true
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+-- interferes with refactoring keybinds
+vim.api.nvim_set_keymap('n', '<Leader>rf', '', { noremap = true, silent = true })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -412,17 +414,17 @@ require('lualine').setup {
 }
 
 -- refactoring
-vim.keymap.set("x", "<leader>rff", function() require('refactoring').refactor('Extract Function') end)
-vim.keymap.set("x", "<leader>rfF", function() require('refactoring').refactor('Extract Function To File') end)
+vim.keymap.set("x", "<leader>rff", function() require('refactoring').refactor('Extract Function') end, { desc = "Refactor extract function"})
+vim.keymap.set("x", "<leader>rfF", function() require('refactoring').refactor('Extract Function To File') end, { desc = "Refactor extract function to file"})
 -- Extract function supports only visual mode
-vim.keymap.set("x", "<leader>rfv", function() require('refactoring').refactor('Extract Variable') end)
+vim.keymap.set("x", "<leader>rfv", function() require('refactoring').refactor('Extract Variable') end, { desc = "Refactor extract variable"})
 -- Extract variable supports only visual ode
-vim.keymap.set("n", "<leader>rfI", function() require('refactoring').refactor('Inline Function') end)
+vim.keymap.set("n", "<leader>rfl", function() require('refactoring').refactor('Inline Function') end, { desc = "Refactor to inline function"})
 -- Inline func supports only normal
-vim.keymap.set({ "n", "x" }, "<leader>rfi", function() require('refactoring').refactor('Inline Variable') end)
+vim.keymap.set({ "n", "x" }, "<leader>rfv", function() require('refactoring').refactor('Inline Variable') end, { desc = "Refactor to inline variable"})
 -- Inline var supports both normal and visual mode
-vim.keymap.set("n", "<leader>rfb", function() require('refactoring').refactor('Extract Block') end)
-vim.keymap.set("n", "<leader>rfbf", function() require('refactoring').refactor('Extract Block To File') end)
+vim.keymap.set("n", "<leader>rfb", function() require('refactoring').refactor('Extract Block') end, { desc = "Refactor extract block"})
+vim.keymap.set("n", "<leader>rfB", function() require('refactoring').refactor('Extract Block To File') end, { desc = "Refactor extract block to file"})
 -- Extract block supports only normal mode
 
 -- [[ Configure Treesitter ]]
