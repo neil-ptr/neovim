@@ -80,6 +80,9 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
+  -- prettier
+  'dense-analysis/ale',
+
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
@@ -151,6 +154,10 @@ require('lazy').setup({
     },
   },
 
+  {
+    'ThePrimeagen/git-worktree.nvim'
+  },
+
   -- nvim v0.8.0
   {
     {
@@ -167,7 +174,16 @@ require('lazy').setup({
       "nvim-lua/plenary.nvim",
     },
   },
-  { 'rose-pine/neovim',      name = 'rose-pine', priority = 1000 },
+  -- { 'rose-pine/neovim',      name = 'rose-pine', priority = 1000 },
+  { "catppuccin/nvim",       name = "catppuccin", priority = 1000 },
+  -- {
+  --   'projekt0n/github-nvim-theme',
+  --   lazy = false,  -- make sure we load this during startup if it is your main colorscheme
+  --   priority = 1000, -- make sure to load this before all the other start plugins
+  --   config = function()
+  --     vim.cmd('colorscheme colorscheme github_dark_tritanopia')
+  --   end,
+  -- },
   {
     "github/copilot.vim",
   },
@@ -178,7 +194,7 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'rose-pine',
+        theme = 'github',
         component_separators = '|',
         section_separators = '',
       },
@@ -296,6 +312,10 @@ vim.o.scrolloff = 8
 -- Keep signcolumn on by default
 vim.wo.signcolumn = 'yes'
 
+-- Set the shift width (indentation amount) to 4 spaces
+vim.o.shiftwidth = 4
+-- Set the number of spaces for a <Tab> character
+vim.o.tabstop = 4
 
 -- Decrease update time
 vim.o.updatetime = 250
@@ -307,7 +327,23 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
--- [[ Basic Keymaps ]]
+-- colors
+require("catppuccin").setup({
+  flavour = "mocha",
+})
+vim.cmd.colorscheme "catppuccin-mocha"
+
+vim.g.ale_fix_on_save = 1
+vim.g.ale_linters = { 
+    [ 'javascript' ] =  'eslint', 
+    [ 'python' ] = 'flake8'
+}
+vim.g.ale_fixers = {
+    [ 'javascript' ] = 'prettier',
+    [ 'python' ] = { 'black', 'isort' },
+    [ 'css' ] = 'prettier'
+
+}-- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
@@ -329,9 +365,6 @@ require("bufferline").setup {
     separator_style = "thin"
   }
 }
-
--- colorscheme
-vim.cmd.colorscheme "rose-pine"
 
 -- vim.cmd('hi Normal guibg=NONE ctermbg=NONE')   -- Set the background to transparent
 -- vim.cmd('hi NormalNC guibg=NONE ctermbg=NONE') -- Set the background to transparent
@@ -414,21 +447,29 @@ require('lualine').setup {
 }
 
 -- refactoring
-vim.keymap.set("x", "<leader>rff", function() require('refactoring').refactor('Extract Function') end, { desc = "Refactor extract function"})
-vim.keymap.set("x", "<leader>rfF", function() require('refactoring').refactor('Extract Function To File') end, { desc = "Refactor extract function to file"})
+vim.keymap.set("x", "<leader>rff", function() require('refactoring').refactor('Extract Function') end,
+  { desc = "Refactor extract function" })
+vim.keymap.set("x", "<leader>rfF", function() require('refactoring').refactor('Extract Function To File') end,
+  { desc = "Refactor extract function to file" })
 -- Extract function supports only visual mode
-vim.keymap.set("x", "<leader>rfv", function() require('refactoring').refactor('Extract Variable') end, { desc = "Refactor extract variable"})
+vim.keymap.set("x", "<leader>rfv", function() require('refactoring').refactor('Extract Variable') end,
+  { desc = "Refactor extract variable" })
 -- Extract variable supports only visual ode
-vim.keymap.set("n", "<leader>rfl", function() require('refactoring').refactor('Inline Function') end, { desc = "Refactor to inline function"})
+vim.keymap.set("n", "<leader>rfl", function() require('refactoring').refactor('Inline Function') end,
+  { desc = "Refactor to inline function" })
 -- Inline func supports only normal
-vim.keymap.set({ "n", "x" }, "<leader>rfv", function() require('refactoring').refactor('Inline Variable') end, { desc = "Refactor to inline variable"})
+vim.keymap.set({ "n", "x" }, "<leader>rfv", function() require('refactoring').refactor('Inline Variable') end,
+  { desc = "Refactor to inline variable" })
 -- Inline var supports both normal and visual mode
-vim.keymap.set("n", "<leader>rfb", function() require('refactoring').refactor('Extract Block') end, { desc = "Refactor extract block"})
-vim.keymap.set("n", "<leader>rfB", function() require('refactoring').refactor('Extract Block To File') end, { desc = "Refactor extract block to file"})
+vim.keymap.set("n", "<leader>rfb", function() require('refactoring').refactor('Extract Block') end,
+  { desc = "Refactor extract block" })
+vim.keymap.set("n", "<leader>rfB", function() require('refactoring').refactor('Extract Block To File') end,
+  { desc = "Refactor extract block to file" })
 -- Extract block supports only normal mode
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
+---@diagnostic disable-next-line: missing-fields
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim' },
@@ -502,7 +543,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- lazy git
 vim.api.nvim_set_keymap('n', '<leader>gg', ':LazyGit<CR>', { silent = true, desc = 'LazyGit' })
 
--- git diff view
+-- TODO: git diff view
 
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
@@ -559,10 +600,11 @@ end
 --  define the property 'filetypes' to the map in question.
 local servers = {
   -- clangd = {},
-  -- gopls = {},
-  -- pyright = {},
+  gopls = {},
+  pyright = {},
   -- rust_analyzer = {},
   tsserver = {},
+  prismals = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
   lua_ls = {
@@ -645,6 +687,20 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
   },
+}
+
+vim.g.ale_fix_on_save = 1
+vim.g.ale_linters = {
+    [ 'javascript' ] =  'prettier',
+    [ 'python' ] = 'flake8'
+}
+vim.g.ale_fixers = {
+    [ 'javascript' ] = 'prettier',
+    [ 'typescript' ] = 'prettier',
+    [ 'python' ] = { 'black', 'isort' },
+    [ 'css' ] = 'prettier',
+    [ 'jsx' ] = 'prettier',
+    [ 'go' ] = { 'gofmt', 'goimports', 'gopls' }
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
