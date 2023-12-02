@@ -345,8 +345,10 @@ vim.api.nvim_set_hl(0, "TelescopePromptPrefix", {fg = oxocarbon.base12, bg = oxo
 vim.api.nvim_set_hl(0, "TelescopeSelection", {fg = oxocarbon.none, bg = oxocarbon.base02})
 vim.api.nvim_set_hl(0, "TelescopePreviewLine", {fg = "#ffffff", bg = oxocarbon.base03})
 
--- vim.cmd('hi NeoTreeNormal guibg=fafafa ctermbg=fafafa')
-vim.api.nvim_set_hl(0, "TreesitterContext", { bg = oxocarbon.base01 })
+-- vim.cmd('hi NeoTreeNormal guibg=' .. oxocarbon.blend)
+-- vim.cmd('hi NeoTreeNormalNC guibg=' .. oxocarbon.base02)
+vim.cmd('hi NeoTreeNormal guibg=#101010')
+vim.cmd('hi NeoTreeNormalNC guibg=#101010')
 
 vim.g.ale_fix_on_save = 1
 vim.g.ale_linters = { 
@@ -452,15 +454,15 @@ local lualine = require('lualine')
 -- stylua: ignore
 local colors = {
   bg       = oxocarbon.base01,
-  fg       = '#000000',
+  fg       = '#ffffff',
   yellow   = '#ECBE7B',
-  cyan     = '#008080',
-  darkblue = '#081633',
-  green    = '#98be65',
-  orange   = '#FF8800',
-  violet   = '#a9a1e1',
-  magenta  = '#c678dd',
-  blue     = '#51afef',
+  cyan     = oxocarbon.base08,
+  darkblue = oxocarbon.base11,
+  green    = oxocarbon.base13,
+  orange   = oxocarbon.base10,
+  violet   = oxocarbon.base14,
+  magenta  = oxocarbon.base10,
+  blue     = oxocarbon.base11,
   red      = '#ec5f67',
 }
 
@@ -540,7 +542,7 @@ ins_left {
     -- auto change color according to neovims mode
     local mode_color = {
       n = colors.red,
-      i = colors.green,
+      i = colors.cyan,
       v = colors.blue,
       [''] = colors.blue,
       V = colors.blue,
@@ -626,14 +628,14 @@ ins_right {
   'o:encoding', -- option component same as &encoding in viml
   fmt = string.upper, -- I'm not sure why it's upper case either ;)
   cond = conditions.hide_in_width,
-  color = { fg = colors.green, gui = 'bold' },
+  color = { fg = colors.cyan, gui = 'bold' },
 }
 
 ins_right {
   'fileformat',
   fmt = string.upper,
   icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
-  color = { fg = colors.green, gui = 'bold' },
+  color = { fg = colors.cyan, gui = 'bold' },
 }
 
 ins_right {
@@ -647,7 +649,7 @@ ins_right {
   -- Is it me or the symbol for modified us really weird
   symbols = { added = ' ', modified = '󰝤 ', removed = ' ' },
   diff_color = {
-    added = { fg = colors.green },
+    added = { fg = colors.cyan },
     modified = { fg = colors.orange },
     removed = { fg = colors.red },
   },
