@@ -253,6 +253,7 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
   },
+  {'nvim-treesitter/nvim-treesitter-context'},
   {
     'christoomey/vim-tmux-navigator'
   },
@@ -335,15 +336,17 @@ vim.o.background = "dark" -- set this to dark or light
 vim.cmd("colorscheme oxocarbon")
 
 local oxocarbon = require("oxocarbon").oxocarbon
+
+-- telescope colors
 vim.api.nvim_set_hl(0, "TelescopeBorder", {fg = oxocarbon.base02, bg = oxocarbon.blend})
 vim.api.nvim_set_hl(0, "TelescopePromptBorder", {fg = oxocarbon.base02, bg = oxocarbon.blend})
 vim.api.nvim_set_hl(0, "TelescopePromptNormal", {fg = oxocarbon.base05, bg = oxocarbon.blend})
 vim.api.nvim_set_hl(0, "TelescopePromptPrefix", {fg = oxocarbon.base12, bg = oxocarbon.base02})
--- vim.api.nvim_set_hl(0, "TelescopePreviewTitle", {fg = oxocarbon.base02, bg = oxocarbon.base12})
--- vim.api.nvim_set_hl(0, "TelescopePromptTitle", {fg = oxocarbon.base02, bg = oxocarbon.base11})
--- vim.api.nvim_set_hl(0, "TelescopeResultsTitle", {fg = oxocarbon.blend, bg = oxocarbon.blend})
 vim.api.nvim_set_hl(0, "TelescopeSelection", {fg = oxocarbon.none, bg = oxocarbon.base02})
 vim.api.nvim_set_hl(0, "TelescopePreviewLine", {fg = "#ffffff", bg = oxocarbon.base03})
+
+-- vim.cmd('hi NeoTreeNormal guibg=fafafa ctermbg=fafafa')
+vim.api.nvim_set_hl(0, "TreesitterContext", { bg = oxocarbon.base01 })
 
 vim.g.ale_fix_on_save = 1
 vim.g.ale_linters = { 
@@ -377,9 +380,6 @@ require("bufferline").setup {
     separator_style = "thin"
   }
 }
-
--- vim.cmd('hi Normal guibg=NONE ctermbg=NONE')   -- Set the background to transparent
--- vim.cmd('hi NormalNC guibg=NONE ctermbg=NONE') -- Set the background to transparent
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -452,7 +452,7 @@ local lualine = require('lualine')
 -- stylua: ignore
 local colors = {
   bg       = oxocarbon.base01,
-  fg       = '#bbc2cf',
+  fg       = '#000000',
   yellow   = '#ECBE7B',
   cyan     = '#008080',
   darkblue = '#081633',
@@ -860,10 +860,65 @@ mason_lspconfig.setup_handlers {
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
-local cmp = require 'cmp'
+local cmp = require('cmp')
 local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
+
+local icons = {
+  Text = '  ',
+  Method ='  ',
+  Function = '  ',
+  Constructor = '  ',
+  Field = '  ',
+  Variable = '  ',
+  Class = '  ',
+  Interface = '  ',
+  Module = '  ',
+  Property = '  ',
+  Unit = '  ',
+  Value = '  ',
+  Enum = '  ',
+  Keyword = '  ',
+  Snippet = ' ✂ ',
+  Color = '  ',
+  File = '  ',
+  Reference = '  ',
+  Folder = '  ',
+  EnumMember = '  ',
+  Constant = '  ',
+  Struct = '  ',
+  Event = '  ',
+  Operator = '  ',
+  TypeParameter = '  ',
+}
+
+-- custom nvim-cmp menu highlighting
+-- gray
+vim.api.nvim_set_hl(0, 'CmpItemAbbrDeprecated', { bg='NONE', strikethrough=true, fg='#808080' })
+-- blue
+vim.api.nvim_set_hl(0, 'CmpItemAbbrMatch', {  bg='NONE', fg='NONE'})
+vim.api.nvim_set_hl(0, 'CmpItemAbbrMatchFuzzy', { link='CmpIntemAbbrMatch' })
+vim.api.nvim_set_hl(0, 'CmpItemKindKeyword', { bg='NONE', fg=oxocarbon.base11 })
+-- light blue
+vim.api.nvim_set_hl(0, 'CmpItemKindVariable', { bg='NONE', fg=oxocarbon.base09 })
+vim.api.nvim_set_hl(0, 'CmpItemKindClass', { link='CmpItemKindVariable' })
+vim.api.nvim_set_hl(0, 'CmpItemKindStruct', { link='CmpItemKindVariable' })
+vim.api.nvim_set_hl(0, 'CmpItemKindText', { link='CmpItemKindVariable' })
+-- cyan
+vim.api.nvim_set_hl(0, 'CmpItemKindInterface',{ bg='NONE', fg=oxocarbon.base08 })
+vim.api.nvim_set_hl(0, 'CmpItemKindMethod', { link='CmpItemKindInterface' })
+-- pink
+vim.api.nvim_set_hl(0, 'CmpItemKindFunction', { bg='NONE', fg=oxocarbon.base10 })
+vim.api.nvim_set_hl(0, 'CmpItemKindField', { bg='NONE', fg=oxocarbon.base10 })
+-- purple
+vim.api.nvim_set_hl(0, 'CmpItemKindModule', { bg='NONE', fg=oxocarbon.base14})
+vim.api.nvim_set_hl(0, 'CmpItemKindConstant', { link='CmpItemKindModule'})
+-- orange
+vim.api.nvim_set_hl(0, 'CmpItemKindSnippet', { bg='NONE', fg=oxocarbon.base13})
+-- front
+vim.api.nvim_set_hl(0, 'CmpItemKindProperty', { bg='NONE', fg='#D4D4D4' })
+vim.api.nvim_set_hl(0, 'CmpItemKindUnit', { link='CmpItemKindProperty' })
 
 ---@diagnostic disable-next-line: missing-fields
 cmp.setup {
@@ -872,6 +927,12 @@ cmp.setup {
       luasnip.lsp_expand(args.body)
     end,
   },
+  formatting = {
+    format = function(_, vim_item)
+      vim_item.kind = (icons[vim_item.kind] or "Text") .. vim_item.kind
+      return vim_item
+    end
+  }, 
   mapping = cmp.mapping.preset.insert {
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
