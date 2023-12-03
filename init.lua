@@ -101,13 +101,21 @@ require('lazy').setup({
       'folke/neodev.nvim',
     },
   },
-
+  {
+    'rmagatti/auto-session',
+    config = function()
+      require("auto-session").setup {
+        log_level = "error",
+        auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/"},
+      }
+    end
+  },
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
-      'L3MON4D3/LuaSnip',
+      { 'L3MON4D3/LuaSnip' , version = "v2.1.1"},
       'saadparwaiz1/cmp_luasnip',
 
       -- Adds LSP completion capabilities
@@ -158,6 +166,13 @@ require('lazy').setup({
     'ThePrimeagen/git-worktree.nvim'
   },
 
+  {
+    'goolord/alpha-nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function ()
+        require'alpha'.setup(require'alpha.themes.startify'.config)
+    end
+  },
   -- nvim v0.8.0
   {
     {
@@ -210,10 +225,7 @@ require('lazy').setup({
     -- See `:help indent_blankline.txt`
     main = "ibl",
     config = function()
-      require('ibl').setup {
-        char = '┊',
-        show_trailing_blankline_indent = false,
-      }
+      require('ibl').setup {}
     end,
   },
   {
@@ -332,6 +344,8 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
+vim.o.hidden = false
+
 vim.o.background = "dark" -- set this to dark or light
 vim.cmd("colorscheme oxocarbon")
 
@@ -358,7 +372,8 @@ vim.g.ale_linters = {
 vim.g.ale_fixers = {
     [ 'javascript' ] = 'prettier',
     [ 'python' ] = { 'black', 'isort' },
-    [ 'css' ] = 'prettier'
+    [ 'css' ] = 'prettier',
+    [ 'lua'] = 'lua-format'
 
 }-- [[ Basic Keymaps ]]
 
@@ -379,7 +394,10 @@ require("bufferline").setup {
       delay = 100,
       reveal = { 'close' }
     },
-    separator_style = "thin"
+    separator_style = "thin",
+    numbers = function(opts)
+      return string.format('[%s]', opts.ordinal)
+    end,
   }
 }
 
@@ -916,7 +934,7 @@ vim.api.nvim_set_hl(0, 'CmpItemKindField', { bg='NONE', fg=oxocarbon.base10 })
 -- purple
 vim.api.nvim_set_hl(0, 'CmpItemKindModule', { bg='NONE', fg=oxocarbon.base14})
 vim.api.nvim_set_hl(0, 'CmpItemKindConstant', { link='CmpItemKindModule'})
--- orange
+-- green
 vim.api.nvim_set_hl(0, 'CmpItemKindSnippet', { bg='NONE', fg=oxocarbon.base13})
 -- front
 vim.api.nvim_set_hl(0, 'CmpItemKindProperty', { bg='NONE', fg='#D4D4D4' })
