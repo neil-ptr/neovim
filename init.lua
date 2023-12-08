@@ -225,7 +225,11 @@ require('lazy').setup({
     -- See `:help indent_blankline.txt`
     main = "ibl",
     config = function()
-      require('ibl').setup {}
+      require('ibl').setup {
+        scope = {
+          highlight = { "Function", "Label" },
+        }
+      }
     end,
   },
   {
@@ -359,14 +363,14 @@ vim.api.nvim_set_hl(0, "TelescopePromptPrefix", {fg = oxocarbon.base12, bg = oxo
 vim.api.nvim_set_hl(0, "TelescopeSelection", {fg = oxocarbon.none, bg = oxocarbon.base02})
 vim.api.nvim_set_hl(0, "TelescopePreviewLine", {fg = "#ffffff", bg = oxocarbon.base03})
 
--- vim.cmd('hi NeoTreeNormal guibg=' .. oxocarbon.blend)
--- vim.cmd('hi NeoTreeNormalNC guibg=' .. oxocarbon.base02)
+-- neotree colors
 vim.cmd('hi NeoTreeNormal guibg=#101010')
 vim.cmd('hi NeoTreeNormalNC guibg=#101010')
+vim.api.nvim_set_hl(0, "NeoTreeModified", {fg = oxocarbon.base14, bg = oxocarbon.none})
 
-vim.g.ale_fix_on_save = 1
-vim.g.ale_linters = { 
-    [ 'javascript' ] =  'eslint', 
+vim.g.ale_fix_on_save = 2
+vim.g.ale_linters = {
+    [ 'javascript' ] =  'eslint',
     [ 'python' ] = 'flake8'
 }
 vim.g.ale_fixers = {
@@ -374,8 +378,9 @@ vim.g.ale_fixers = {
     [ 'python' ] = { 'black', 'isort' },
     [ 'css' ] = 'prettier',
     [ 'lua'] = 'lua-format'
+}
 
-}-- [[ Basic Keymaps ]]
+-- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
@@ -714,7 +719,9 @@ require('nvim-treesitter.configs').setup {
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
-
+  autotag = {
+    enable = true,
+  },
   highlight = { enable = true },
   indent = { enable = true },
   incremental_selection = {
@@ -840,9 +847,12 @@ local servers = {
   -- clangd = {},
   gopls = {},
   pyright = {},
-  -- rust_analyzer = {},
+  rust_analyzer = {},
   tsserver = {},
   prismals = {},
+  jsonls = {},
+  cssls = {},
+  tailwindcss = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
   lua_ls = {
@@ -991,7 +1001,8 @@ cmp.setup {
 vim.g.ale_fix_on_save = 1
 vim.g.ale_linters = {
     [ 'javascript' ] =  'prettier',
-    [ 'python' ] = 'flake8'
+    [ 'python' ] = 'flake8',
+    ['go'] = { 'golangci-lint', 'gofmt' }
 }
 vim.g.ale_fixers = {
     [ 'javascript' ] = 'prettier',
