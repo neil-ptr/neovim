@@ -190,7 +190,7 @@ require('lazy').setup({
     },
   },
   -- {'rebelot/kanagawa.nvim' },
-  -- { 'rose-pine/neovim',      name = 'rose-pine', priority = 1000 },
+  { 'rose-pine/neovim',      name = 'rose-pine', priority = 1000 },
   -- { "catppuccin/nvim",       name = "catppuccin", priority = 1000 },
   -- {
   --   'projekt0n/github-nvim-theme',
@@ -212,8 +212,7 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'github',
-        component_separators = '|',
+        -- theme = 'github',
         section_separators = '',
       },
     },
@@ -350,23 +349,17 @@ vim.o.termguicolors = true
 
 vim.o.hidden = false
 
-vim.o.background = "dark" -- set this to dark or light
-vim.cmd("colorscheme oxocarbon")
+-- vim.o.background = "dark" -- set this to dark or light
+-- vim.cmd("colorscheme oxocarbon")
 
-local oxocarbon = require("oxocarbon").oxocarbon
-
--- telescope colors
-vim.api.nvim_set_hl(0, "TelescopeBorder", {fg = oxocarbon.base02, bg = oxocarbon.blend})
-vim.api.nvim_set_hl(0, "TelescopePromptBorder", {fg = oxocarbon.base02, bg = oxocarbon.blend})
-vim.api.nvim_set_hl(0, "TelescopePromptNormal", {fg = oxocarbon.base05, bg = oxocarbon.blend})
-vim.api.nvim_set_hl(0, "TelescopePromptPrefix", {fg = oxocarbon.base12, bg = oxocarbon.base02})
-vim.api.nvim_set_hl(0, "TelescopeSelection", {fg = oxocarbon.none, bg = oxocarbon.base02})
-vim.api.nvim_set_hl(0, "TelescopePreviewLine", {fg = "#ffffff", bg = oxocarbon.base03})
+vim.cmd('colorscheme rose-pine-moon')
 
 -- neotree colors
-vim.cmd('hi NeoTreeNormal guibg=#101010')
-vim.cmd('hi NeoTreeNormalNC guibg=#101010')
-vim.api.nvim_set_hl(0, "NeoTreeModified", {fg = oxocarbon.base14, bg = oxocarbon.none})
+vim.cmd('hi NeoTreeNormal guibg=#1f1d2e')
+vim.cmd('hi NeoTreeNormalNC guibg=#1f1d2e')
+
+-- tilde empty line removal
+vim.opt.fillchars = { eob = " "}
 
 vim.g.ale_fix_on_save = 2
 vim.g.ale_linters = {
@@ -470,225 +463,7 @@ vim.keymap.set('n', '<leader>sf', require('telescope.builtin').live_grep, { desc
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 
--- lualine config
-local lualine = require('lualine')
 
--- Color table for highlights
--- stylua: ignore
-local colors = {
-  bg       = oxocarbon.base01,
-  fg       = '#ffffff',
-  yellow   = '#ECBE7B',
-  cyan     = oxocarbon.base08,
-  darkblue = oxocarbon.base11,
-  green    = oxocarbon.base13,
-  orange   = oxocarbon.base10,
-  violet   = oxocarbon.base14,
-  magenta  = oxocarbon.base10,
-  blue     = oxocarbon.base11,
-  red      = '#ec5f67',
-}
-
-local conditions = {
-  buffer_not_empty = function()
-    return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
-  end,
-  hide_in_width = function()
-    return vim.fn.winwidth(0) > 80
-  end,
-  check_git_workspace = function()
-    local filepath = vim.fn.expand('%:p:h')
-    local gitdir = vim.fn.finddir('.git', filepath .. ';')
-    return gitdir and #gitdir > 0 and #gitdir < #filepath
-  end,
-}
-
--- Config
-local config = {
-  options = {
-    -- Disable sections and component separators
-    component_separators = '',
-    section_separators = '',
-    theme = {
-      -- We are going to use lualine_c an lualine_x as left and
-      -- right section. Both are highlighted by c theme .  So we
-      -- are just setting default looks o statusline
-      normal = { c = { fg = colors.fg, bg = colors.bg } },
-      inactive = { c = { fg = colors.fg, bg = colors.bg } },
-    },
-  },
-  sections = {
-    -- these are to remove the defaults
-    lualine_a = {},
-    lualine_b = {},
-    lualine_y = {},
-    lualine_z = {},
-    -- These will be filled later
-    lualine_c = {},
-    lualine_x = {},
-  },
-  inactive_sections = {
-    -- these are to remove the defaults
-    lualine_a = {},
-    lualine_b = {},
-    lualine_y = {},
-    lualine_z = {},
-    lualine_c = {},
-    lualine_x = {},
-  },
-}
-
--- Inserts a component in lualine_c at left section
-local function ins_left(component)
-  table.insert(config.sections.lualine_c, component)
-end
-
--- Inserts a component in lualine_x at right section
-local function ins_right(component)
-  table.insert(config.sections.lualine_x, component)
-end
-
-ins_left {
-  function()
-    return '▊'
-  end,
-  color = { fg = colors.blue }, -- Sets highlighting of component
-  padding = { left = 0, right = 1 }, -- We don't need space before this
-}
-
-ins_left {
-  -- mode component
-  function()
-    return ''
-  end,
-  color = function()
-    -- auto change color according to neovims mode
-    local mode_color = {
-      n = colors.red,
-      i = colors.cyan,
-      v = colors.blue,
-      [''] = colors.blue,
-      V = colors.blue,
-      c = colors.magenta,
-      no = colors.red,
-      s = colors.orange,
-      S = colors.orange,
-      [''] = colors.orange,
-      ic = colors.yellow,
-      R = colors.violet,
-      Rv = colors.violet,
-      cv = colors.red,
-      ce = colors.red,
-      r = colors.cyan,
-      rm = colors.cyan,
-      ['r?'] = colors.cyan,
-      ['!'] = colors.red,
-      t = colors.red,
-    }
-    return { fg = mode_color[vim.fn.mode()] }
-  end,
-  padding = { right = 1 },
-}
-
-ins_left {
-  -- filesize component
-  'filesize',
-  cond = conditions.buffer_not_empty,
-}
-
-ins_left {
-  'filename',
-  cond = conditions.buffer_not_empty,
-  color = { fg = colors.magenta, gui = 'bold' },
-}
-
-ins_left { 'location' }
-
-ins_left { 'progress', color = { fg = colors.fg, gui = 'bold' } }
-
-ins_left {
-  'diagnostics',
-  sources = { 'nvim_diagnostic' },
-  symbols = { error = ' ', warn = ' ', info = ' ' },
-  diagnostics_color = {
-    color_error = { fg = colors.red },
-    color_warn = { fg = colors.yellow },
-    color_info = { fg = colors.cyan },
-  },
-}
-
--- Insert mid section. You can make any number of sections in neovim :)
--- for lualine it's any number greater then 2
-ins_left {
-  function()
-    return '%='
-  end,
-}
-
-ins_left {
-  -- Lsp server name .
-  function()
-    local msg = 'No Active Lsp'
-    local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
-    local clients = vim.lsp.get_active_clients()
-    if next(clients) == nil then
-      return msg
-    end
-    for _, client in ipairs(clients) do
-      local filetypes = client.config.filetypes
-      if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-        return client.name
-      end
-    end
-    return msg
-  end,
-  icon = ' LSP:',
-  color = { fg = '#ffffff', gui = 'bold' },
-}
-
--- Add components to right sections
-ins_right {
-  'o:encoding', -- option component same as &encoding in viml
-  fmt = string.upper, -- I'm not sure why it's upper case either ;)
-  cond = conditions.hide_in_width,
-  color = { fg = colors.cyan, gui = 'bold' },
-}
-
-ins_right {
-  'fileformat',
-  fmt = string.upper,
-  icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
-  color = { fg = colors.cyan, gui = 'bold' },
-}
-
-ins_right {
-  'branch',
-  icon = '',
-  color = { fg = colors.violet, gui = 'bold' },
-}
-
-ins_right {
-  'diff',
-  -- Is it me or the symbol for modified us really weird
-  symbols = { added = ' ', modified = '󰝤 ', removed = ' ' },
-  diff_color = {
-    added = { fg = colors.cyan },
-    modified = { fg = colors.orange },
-    removed = { fg = colors.red },
-  },
-  cond = conditions.hide_in_width,
-}
-
-ins_right {
-  function()
-    return '▊'
-  end,
-  color = { fg = colors.blue },
-  padding = { left = 1 },
-}
-
--- Now don't forget to initialize lualine
-lualine.setup(config)
 -- refactoring
 vim.keymap.set("x", "<leader>rff", function() require('refactoring').refactor('Extract Function') end,
   { desc = "Refactor extract function" })
@@ -835,6 +610,36 @@ local on_attach = function(_, bufnr)
   end, { desc = 'Format current buffer with LSP' })
 end
 
+vim.cmd [[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]]
+vim.cmd [[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
+
+local border = {
+      {"🭽", "FloatBorder"},
+      {"▔", "FloatBorder"},
+      {"🭾", "FloatBorder"},
+      {"▕", "FloatBorder"},
+      {"🭿", "FloatBorder"},
+      {"▁", "FloatBorder"},
+      {"🭼", "FloatBorder"},
+      {"▏", "FloatBorder"},
+}
+
+-- LSP settings (for overriding per client)
+local handlers =  {
+  ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border}),
+  ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border }),
+}
+
+-- Do not forget to use the on_attach function
+
+-- To instead override globally
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+  opts = opts or {}
+  opts.border = opts.border or border
+  return orig_util_open_floating_preview(contents, syntax, opts, ...)
+end
+
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
 --
@@ -923,32 +728,6 @@ local icons = {
   TypeParameter = '  ',
 }
 
--- custom nvim-cmp menu highlighting
--- gray
-vim.api.nvim_set_hl(0, 'CmpItemAbbrDeprecated', { bg='NONE', strikethrough=true, fg='#808080' })
--- blue
-vim.api.nvim_set_hl(0, 'CmpItemAbbrMatch', {  bg='NONE', fg='NONE'})
-vim.api.nvim_set_hl(0, 'CmpItemAbbrMatchFuzzy', { link='CmpIntemAbbrMatch' })
-vim.api.nvim_set_hl(0, 'CmpItemKindKeyword', { bg='NONE', fg=oxocarbon.base11 })
--- light blue
-vim.api.nvim_set_hl(0, 'CmpItemKindVariable', { bg='NONE', fg=oxocarbon.base09 })
-vim.api.nvim_set_hl(0, 'CmpItemKindClass', { link='CmpItemKindVariable' })
-vim.api.nvim_set_hl(0, 'CmpItemKindStruct', { link='CmpItemKindVariable' })
-vim.api.nvim_set_hl(0, 'CmpItemKindText', { link='CmpItemKindVariable' })
--- cyan
-vim.api.nvim_set_hl(0, 'CmpItemKindInterface',{ bg='NONE', fg=oxocarbon.base08 })
-vim.api.nvim_set_hl(0, 'CmpItemKindMethod', { link='CmpItemKindInterface' })
--- pink
-vim.api.nvim_set_hl(0, 'CmpItemKindFunction', { bg='NONE', fg=oxocarbon.base10 })
-vim.api.nvim_set_hl(0, 'CmpItemKindField', { bg='NONE', fg=oxocarbon.base10 })
--- purple
-vim.api.nvim_set_hl(0, 'CmpItemKindModule', { bg='NONE', fg=oxocarbon.base14})
-vim.api.nvim_set_hl(0, 'CmpItemKindConstant', { link='CmpItemKindModule'})
--- green
-vim.api.nvim_set_hl(0, 'CmpItemKindSnippet', { bg='NONE', fg=oxocarbon.base13})
--- front
-vim.api.nvim_set_hl(0, 'CmpItemKindProperty', { bg='NONE', fg='#D4D4D4' })
-vim.api.nvim_set_hl(0, 'CmpItemKindUnit', { link='CmpItemKindProperty' })
 
 ---@diagnostic disable-next-line: missing-fields
 cmp.setup {
@@ -1007,7 +786,7 @@ vim.g.ale_linters = {
 vim.g.ale_fixers = {
     [ 'javascript' ] = 'prettier',
     [ 'typescript' ] = 'prettier',
-    [ 'python' ] = { 'black', 'isort' },
+    [ 'python' ] = { 'autopep8', 'isort', 'black' },
     [ 'css' ] = 'prettier',
     [ 'jsx' ] = 'prettier',
     [ 'go' ] = { 'gofmt', 'goimports', 'gopls' }
