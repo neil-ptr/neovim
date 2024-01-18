@@ -81,7 +81,7 @@ require('lazy').setup({
   'tpope/vim-sleuth',
 
   -- prettier
-  'dense-analysis/ale',
+  -- 'dense-analysis/ale',
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -130,7 +130,7 @@ require('lazy').setup({
   { 'folke/which-key.nvim',   opts = {} },
 
   { "sindrets/diffview.nvim", opts = {} },
-
+  
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -201,7 +201,7 @@ require('lazy').setup({
     -- end,
   -- },
   -- { "EdenEast/nightfox.nvim" },
-  {'nyoom-engineering/oxocarbon.nvim'},
+  -- {'nyoom-engineering/oxocarbon.nvim'},
   {
     "github/copilot.vim",
   },
@@ -260,6 +260,16 @@ require('lazy').setup({
       },
     },
   },
+  {
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    config = function()
+        require("nvim-surround").setup({
+            -- Configuration here, or leave empty to use defaults
+        })
+    end
+},
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -360,18 +370,6 @@ vim.cmd('hi NeoTreeNormalNC guibg=#1f1d2e')
 
 -- tilde empty line removal
 vim.opt.fillchars = { eob = " "}
-
-vim.g.ale_fix_on_save = 2
-vim.g.ale_linters = {
-    [ 'javascript' ] =  'eslint',
-    [ 'python' ] = 'flake8'
-}
-vim.g.ale_fixers = {
-    [ 'javascript' ] = 'prettier',
-    [ 'python' ] = { 'black', 'isort' },
-    [ 'css' ] = 'prettier',
-    [ 'lua'] = 'lua-format'
-}
 
 -- [[ Basic Keymaps ]]
 
@@ -791,6 +789,8 @@ vim.g.ale_fixers = {
     [ 'jsx' ] = 'prettier',
     [ 'go' ] = { 'gofmt', 'goimports', 'gopls' }
 }
+
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
