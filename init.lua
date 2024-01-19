@@ -106,7 +106,7 @@ require('lazy').setup({
     config = function()
       require("auto-session").setup {
         log_level = "error",
-        auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/"},
+        auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
       }
     end
   },
@@ -115,7 +115,7 @@ require('lazy').setup({
     'hrsh7th/nvim-cmp',
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
-      { 'L3MON4D3/LuaSnip' , version = "v2.1.1"},
+      { 'L3MON4D3/LuaSnip', version = "v2.1.1" },
       'saadparwaiz1/cmp_luasnip',
 
       -- Adds LSP completion capabilities
@@ -127,9 +127,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',   opts = {} },
-
-  { "sindrets/diffview.nvim", opts = {} },
+  { 'folke/which-key.nvim', opts = {} },
 
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
@@ -162,15 +160,12 @@ require('lazy').setup({
     },
   },
 
-  {
-    'ThePrimeagen/git-worktree.nvim'
-  },
-
+  -- startup screen
   {
     'goolord/alpha-nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function ()
-        require'alpha'.setup(require'alpha.themes.startify'.config)
+    config = function()
+      require 'alpha'.setup(require 'alpha.themes.startify'.config)
     end
   },
   -- nvim v0.8.0
@@ -189,22 +184,7 @@ require('lazy').setup({
       "nvim-lua/plenary.nvim",
     },
   },
-  -- {'rebelot/kanagawa.nvim' },
-  { 'rose-pine/neovim',      name = 'rose-pine', priority = 1000 },
-  -- { "catppuccin/nvim",       name = "catppuccin", priority = 1000 },
-  -- {
-  --   'projekt0n/github-nvim-theme',
-  --   lazy = false,  -- make sure we load this during startup if it is your main colorscheme
-  --   priority = 1000, -- make sure to load this before all the other start plugins
-    -- config = function()
-    --   vim.cmd('colorscheme colorscheme github_dark_tritanopia')
-    -- end,
-  -- },
-  -- { "EdenEast/nightfox.nvim" },
-  {'nyoom-engineering/oxocarbon.nvim'},
-  {
-    "github/copilot.vim",
-  },
+  { 'rose-pine/neovim',     name = 'rose-pine', priority = 1000 },
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -238,7 +218,7 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',                  opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   {
@@ -268,7 +248,7 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
   },
-  {'nvim-treesitter/nvim-treesitter-context'},
+  { 'nvim-treesitter/nvim-treesitter-context' },
   {
     'christoomey/vim-tmux-navigator'
   },
@@ -349,29 +329,14 @@ vim.o.termguicolors = true
 
 vim.o.hidden = false
 
--- vim.o.background = "dark" -- set this to dark or light
--- vim.cmd("colorscheme oxocarbon")
-
 vim.cmd('colorscheme rose-pine-moon')
 
 -- neotree colors
-vim.cmd('hi NeoTreeNormal guibg=#1f1d2e')
-vim.cmd('hi NeoTreeNormalNC guibg=#1f1d2e')
+vim.cmd('hi NeoTreeNormal guibg=#191724')
+vim.cmd('hi NeoTreeNormalNC guibg=#191724')
 
 -- tilde empty line removal
-vim.opt.fillchars = { eob = " "}
-
-vim.g.ale_fix_on_save = 2
-vim.g.ale_linters = {
-    [ 'javascript' ] =  'eslint',
-    [ 'python' ] = 'flake8'
-}
-vim.g.ale_fixers = {
-    [ 'javascript' ] = 'prettier',
-    [ 'python' ] = { 'black', 'isort' },
-    [ 'css' ] = 'prettier',
-    [ 'lua'] = 'lua-format'
-}
+vim.opt.fillchars = { eob = " " }
 
 -- [[ Basic Keymaps ]]
 
@@ -412,10 +377,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- Nvim.tree
 vim.api.nvim_set_keymap('n', '<Leader>t', ':Neotree toggle<CR>', { noremap = true, desc = 'Toggle file tree' })
-
--- next and prev buffers
-vim.api.nvim_set_keymap('n', '<C-,>', ':bprev<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-.>', ':bnext<CR>', { noremap = true, silent = true })
 
 -- harpoon config
 local mark = require("harpoon.mark")
@@ -614,20 +575,20 @@ vim.cmd [[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]]
 vim.cmd [[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
 
 local border = {
-      {"🭽", "FloatBorder"},
-      {"▔", "FloatBorder"},
-      {"🭾", "FloatBorder"},
-      {"▕", "FloatBorder"},
-      {"🭿", "FloatBorder"},
-      {"▁", "FloatBorder"},
-      {"🭼", "FloatBorder"},
-      {"▏", "FloatBorder"},
+  { "🭽", "FloatBorder" },
+  { "▔", "FloatBorder" },
+  { "🭾", "FloatBorder" },
+  { "▕", "FloatBorder" },
+  { "🭿", "FloatBorder" },
+  { "▁", "FloatBorder" },
+  { "🭼", "FloatBorder" },
+  { "▏", "FloatBorder" },
 }
 
 -- LSP settings (for overriding per client)
-local handlers =  {
-  ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border}),
-  ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border }),
+local handlers = {
+  ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
+  ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
 }
 
 -- Do not forget to use the on_attach function
@@ -658,7 +619,6 @@ local servers = {
   jsonls = {},
   cssls = {},
   tailwindcss = {},
-  -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
   lua_ls = {
     Lua = {
@@ -702,7 +662,7 @@ luasnip.config.setup {}
 
 local icons = {
   Text = '  ',
-  Method ='  ',
+  Method = '  ',
   Function = '  ',
   Constructor = '  ',
   Field = '  ',
@@ -728,7 +688,6 @@ local icons = {
   TypeParameter = '  ',
 }
 
-
 ---@diagnostic disable-next-line: missing-fields
 cmp.setup {
   snippet = {
@@ -741,7 +700,7 @@ cmp.setup {
       vim_item.kind = (icons[vim_item.kind] or "Text") .. vim_item.kind
       return vim_item
     end
-  }, 
+  },
   mapping = cmp.mapping.preset.insert {
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
@@ -775,21 +734,6 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
   },
-}
-
-vim.g.ale_fix_on_save = 1
-vim.g.ale_linters = {
-    [ 'javascript' ] =  'prettier',
-    [ 'python' ] = 'flake8',
-    ['go'] = { 'golangci-lint', 'gofmt' }
-}
-vim.g.ale_fixers = {
-    [ 'javascript' ] = 'prettier',
-    [ 'typescript' ] = 'prettier',
-    [ 'python' ] = { 'autopep8', 'isort', 'black' },
-    [ 'css' ] = 'prettier',
-    [ 'jsx' ] = 'prettier',
-    [ 'go' ] = { 'gofmt', 'goimports', 'gopls' }
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
