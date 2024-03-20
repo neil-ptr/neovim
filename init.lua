@@ -108,7 +108,7 @@ require('lazy').setup({
       require('auto-session').setup {
         log_level = 'error',
         auto_session_suppress_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
-  auto_clean_after_session_restore = false, -- Automatically clean up broken neo-tree buffers saved in sessions
+        auto_clean_after_session_restore = false, -- Automatically clean up broken neo-tree buffers saved in sessions
       }
     end,
   },
@@ -348,8 +348,6 @@ vim.o.hidden = false
 
 vim.cmd 'colorscheme rose-pine-moon'
 
-local rosemooncolors = require("rose-pine.palette")
-
 -- neotree colors
 vim.cmd 'hi NeoTreeNormal guibg=#1f1d2e'
 vim.cmd 'hi NeoTreeNormalNC guibg=#1f1d2e'
@@ -488,7 +486,7 @@ end, { desc = 'Refactor extract block to file' })
 ---@diagnostic disable-next-line: missing-fields
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'astro', 'css' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
@@ -657,6 +655,7 @@ local servers = {
   cssls = {},
   tailwindcss = {},
   zls = {},
+  astro = { filetypes = { 'astro' } },
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
   lua_ls = {
