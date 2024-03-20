@@ -108,6 +108,7 @@ require('lazy').setup({
       require('auto-session').setup {
         log_level = 'error',
         auto_session_suppress_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
+  auto_clean_after_session_restore = false, -- Automatically clean up broken neo-tree buffers saved in sessions
       }
     end,
   },
@@ -213,18 +214,6 @@ require('lazy').setup({
   -- {'nyoom-engineering/oxocarbon.nvim'},
   {
     'github/copilot.vim',
-  },
-  {
-    -- Set lualine as statusline
-    'nvim-lualine/lualine.nvim',
-    -- See `:help lualine.txt`
-    opts = {
-      options = {
-        icons_enabled = false,
-        -- theme = 'github',
-        section_separators = '',
-      },
-    },
   },
   {
     -- Add indentation guides even on blank lines
@@ -378,6 +367,8 @@ vim.o.hidden = false
 -- vim.cmd("colorscheme oxocarbon")
 
 vim.cmd 'colorscheme rose-pine-moon'
+
+local rosemooncolors = require("rose-pine.palette")
 
 -- neotree colors
 vim.cmd 'hi NeoTreeNormal guibg=#1f1d2e'
@@ -724,16 +715,12 @@ require('conform').setup {
   formatters_by_ft = {
     lua = { 'stylua' },
     -- Conform will run multiple formatters sequentially
-    python = { 'isort', 'black' },
+    python = { 'black', 'isort' },
     -- Use a sub-list to run only the first available formatter
-    -- javascript = { { 'dprint', 'prettierd' } },
-    -- typescript = { { 'dprint', 'prettierd' } },
-    -- jsx = { { 'dprint', 'prettierd' } },
-    -- typescriptreact = { { 'dprint', 'prettierd' } },
-    javascript = { 'prettierd', 'dprint' },
-    typescript = { 'prettierd', 'dprint' },
-    jsx = { 'prettierd', 'dprint' },
-    typescriptreact = { 'prettierd', 'dprint' },
+    javascript = { { 'dprint', 'prettierd' } },
+    typescript = { { 'dprint', 'prettierd' } },
+    jsx = { { 'dprint', 'prettierd' } },
+    typescriptreact = { { 'dprint', 'prettierd' } },
     go = { 'gofmt', 'goimports', 'golines' },
   },
 }
