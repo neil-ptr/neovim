@@ -229,11 +229,6 @@ require('lazy').setup({
       }
     end,
   },
-  {
-    'akinsho/bufferline.nvim',
-    version = '*',
-    dependencies = 'nvim-tree/nvim-web-devicons',
-  },
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
@@ -388,20 +383,6 @@ vim.api.nvim_set_keymap('n', '<Leader>rf', '', { noremap = true, silent = true }
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-
-require('bufferline').setup {
-  options = {
-    hover = {
-      enabled = true,
-      delay = 100,
-      reveal = { 'close' },
-    },
-    separator_style = 'thin',
-    numbers = function(opts)
-      return string.format('[%s]', opts.ordinal)
-    end,
-  },
-}
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`

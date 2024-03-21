@@ -24,7 +24,7 @@ return {
       yellow   = rosemooncolors.gold,
       cyan     = rosemooncolors.foam,
       darkblue = rosemooncolors.pine,
-      green    = '#98be65',
+      green    = '#52DDCB',
       orange   = rosemooncolors.rose,
       violet   = rosemooncolors.iris,
       magenta  = '#c678dd',
