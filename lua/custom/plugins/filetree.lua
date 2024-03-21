@@ -26,6 +26,7 @@ return {
       {text = "󰌵", texthl = "DiagnosticSignHint"})
 
     require('neo-tree').setup {
+      auto_clean_after_session_restore = true,
       filesystem = {
         filtered_items = {
           visible = true, -- This is what you want: If you set this to `true`, all "hide" just mean "dimmed out"
