@@ -657,6 +657,7 @@ local servers = {
   jsonls = {},
   cssls = {},
   tailwindcss = {},
+  zls = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
   lua_ls = {
