@@ -212,9 +212,9 @@ require('lazy').setup({
   -- },
   -- { "EdenEast/nightfox.nvim" },
   -- {'nyoom-engineering/oxocarbon.nvim'},
-  {
-    'github/copilot.vim',
-  },
+  -- {
+  --   'github/copilot.vim',
+  -- },
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
