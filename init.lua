@@ -180,7 +180,7 @@ require('lazy').setup({
     'goolord/alpha-nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      require('alpha').setup(require('alpha.themes.startify').config)
+      require('alpha').setup(require('alpha.themes.dashboard').config)
     end,
   },
   -- nvim v0.8.0
@@ -199,22 +199,7 @@ require('lazy').setup({
       'nvim-lua/plenary.nvim',
     },
   },
-  -- {'rebelot/kanagawa.nvim' },
   { 'rose-pine/neovim', name = 'rose-pine', priority = 1000 },
-  -- { "catppuccin/nvim",       name = "catppuccin", priority = 1000 },
-  -- {
-  --   'projekt0n/github-nvim-theme',
-  --   lazy = false,  -- make sure we load this during startup if it is your main colorscheme
-  --   priority = 1000, -- make sure to load this before all the other start plugins
-  -- config = function()
-  --   vim.cmd('colorscheme colorscheme github_dark_tritanopia')
-  -- end,
-  -- },
-  -- { "EdenEast/nightfox.nvim" },
-  -- {'nyoom-engineering/oxocarbon.nvim'},
-  -- {
-  --   'github/copilot.vim',
-  -- },
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
@@ -424,6 +409,20 @@ end, { desc = 'Harpoon nav to 4 file' })
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
   defaults = {
+    vimgrep_arguments = {
+      'rg',
+      '--color=never',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case',
+      '--hidden',
+      '--no-ignore-vcs'
+    },
+    file_ignore_patterns = {
+     "node_modules", "build", "dist", "yarn.lock"
+    },
     mappings = {
       i = {
         ['<C-u>'] = false,
@@ -698,6 +697,7 @@ require('conform').setup {
     lua = { 'stylua' },
     -- Conform will run multiple formatters sequentially
     python = { 'black', 'isort' },
+    json = { 'fixjson' },
     -- Use a sub-list to run only the first available formatter
     javascript = { { 'dprint', 'prettierd' } },
     typescript = { { 'dprint', 'prettierd' } },
@@ -795,6 +795,10 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
   },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  }
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
