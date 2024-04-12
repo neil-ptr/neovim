@@ -14,22 +14,22 @@ return {
   },
   config = function()
     local lualine = require('lualine')
-    local rosemooncolors = require("rose-pine.palette")
+    local rosepine = require("rose-pine.palette")
 
     -- Color table for highlights
     -- stylua: ignore
     local colors = {
-      bg       = "#2a283e",
-      fg       = rosemooncolors.text,
-      yellow   = rosemooncolors.gold,
-      cyan     = rosemooncolors.foam,
-      darkblue = rosemooncolors.pine,
-      green    = '#52DDCB',
-      orange   = rosemooncolors.rose,
-      violet   = rosemooncolors.iris,
-      magenta  = '#c678dd',
-      blue     = '#51afef',
-      red      = rosemooncolors.love,
+      bg       = rosepine.surface,
+      fg       = rosepine.text,
+      yellow   = rosepine.gold,
+      cyan     = rosepine.foam,
+      darkblue = rosepine.pine,
+      green    = rosepine.gold,
+      orange   = rosepine.rose,
+      violet   = rosepine.iris,
+      magenta  = rosepine.iris,
+      blue     = rosepine.pine,
+      red      = rosepine.love,
     }
 
     local conditions = {
@@ -143,6 +143,7 @@ return {
       'filename',
       cond = conditions.buffer_not_empty,
       color = { fg = colors.magenta, gui = 'bold' },
+      path = 1,
     }
 
     ins_left { 'location' }
