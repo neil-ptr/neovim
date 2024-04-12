@@ -346,11 +346,11 @@ vim.o.hidden = false
 -- vim.o.background = "dark" -- set this to dark or light
 -- vim.cmd("colorscheme oxocarbon")
 
-vim.cmd 'colorscheme rose-pine-moon'
+vim.cmd 'colorscheme rose-pine'
 
 -- neotree colors
-vim.cmd 'hi NeoTreeNormal guibg=#1f1d2e'
-vim.cmd 'hi NeoTreeNormalNC guibg=#1f1d2e'
+-- vim.cmd 'hi NeoTreeNormal guibg=#1f1d2e'
+-- vim.cmd 'hi NeoTreeNormalNC guibg=#1f1d2e'
 
 -- tilde empty line removal
 vim.opt.fillchars = { eob = ' ' }
@@ -377,6 +377,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
+
+-- paste without replacing register val
+vim.keymap.set("x", "<leader>p", "\"_dP")
 
 -- Nvim.tree
 vim.api.nvim_set_keymap('n', '<Leader>t', ':Neotree toggle<CR>', { noremap = true, desc = 'Toggle file tree' })
@@ -405,8 +408,15 @@ end, { desc = 'Harpoon nav to 4 file' })
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
+local actions = require "telescope.actions"
 require('telescope').setup {
   defaults = {
+    layout_config = {
+      horizontal = {
+        prompt_position = "top"
+      }
+    },
+    sorting_strategy = "ascending",
     vimgrep_arguments = {
       'rg',
       '--color=never',
@@ -429,6 +439,15 @@ require('telescope').setup {
     },
     dynamic_preview_title = true,
   },
+    pickers = {
+    buffers = {
+      mappings = {
+        i = {
+          ["<c-d>"] = actions.delete_buffer,
+        }
+      }
+    }
+  }
 }
 
 -- Enable telescope fzf native, if installed
@@ -656,6 +675,7 @@ local servers = {
   tailwindcss = {},
   zls = {},
   astro = { filetypes = { 'astro' } },
+  clangd = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
   lua_ls = {
@@ -703,6 +723,7 @@ require('conform').setup {
     jsx = { { 'dprint', 'prettierd' } },
     typescriptreact = { { 'dprint', 'prettierd' } },
     go = { 'gofmt', 'goimports', 'golines' },
+    c = { 'clang-format' },
   },
 }
 
