@@ -381,6 +381,10 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- paste without replacing register val
 vim.keymap.set("x", "<leader>p", "\"_dP")
 
+-- delete without replacing register val
+vim.keymap.set("n", "<leader>d", "\"_d")
+vim.keymap.set("v", "<leader>d", "\"_d")
+
 -- Nvim.tree
 vim.api.nvim_set_keymap('n', '<Leader>t', ':Neotree toggle<CR>', { noremap = true, desc = 'Toggle file tree' })
 
@@ -604,7 +608,7 @@ local on_attach = function(_, bufnr)
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+  nmap('<leader>ss', require('telescope.builtin').lsp_document_symbols, 'Document [S]ymbol[s]')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
