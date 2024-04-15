@@ -379,11 +379,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- paste without replacing register val
-vim.keymap.set("x", "<leader>p", "\"_dP")
+vim.keymap.set('x', '<leader>p', '"_dP')
 
 -- delete without replacing register val
-vim.keymap.set("n", "<leader>d", "\"_d")
-vim.keymap.set("v", "<leader>d", "\"_d")
+vim.keymap.set('n', '<leader>d', '"_d')
+vim.keymap.set('v', '<leader>d', '"_d')
 
 -- Nvim.tree
 vim.api.nvim_set_keymap('n', '<Leader>t', ':Neotree toggle<CR>', { noremap = true, desc = 'Toggle file tree' })
@@ -412,15 +412,15 @@ end, { desc = 'Harpoon nav to 4 file' })
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
-local actions = require "telescope.actions"
+local actions = require 'telescope.actions'
 require('telescope').setup {
   defaults = {
     layout_config = {
       horizontal = {
-        prompt_position = "top"
-      }
+        prompt_position = 'top',
+      },
     },
-    sorting_strategy = "ascending",
+    sorting_strategy = 'ascending',
     vimgrep_arguments = {
       'rg',
       '--color=never',
@@ -430,10 +430,13 @@ require('telescope').setup {
       '--column',
       '--smart-case',
       '--hidden',
-      '--no-ignore-vcs'
+      '--no-ignore-vcs',
     },
     file_ignore_patterns = {
-     "node_modules", "build", "dist", "yarn.lock"
+      'node_modules',
+      'build',
+      'dist',
+      'yarn.lock',
     },
     mappings = {
       i = {
@@ -443,15 +446,15 @@ require('telescope').setup {
     },
     dynamic_preview_title = true,
   },
-    pickers = {
+  pickers = {
     buffers = {
       mappings = {
         i = {
-          ["<c-d>"] = actions.delete_buffer,
-        }
-      }
-    }
-  }
+          ['<c-d>'] = actions.delete_buffer,
+        },
+      },
+    },
+  },
 }
 
 -- Enable telescope fzf native, if installed
@@ -822,7 +825,7 @@ cmp.setup {
   window = {
     completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered(),
-  }
+  },
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
