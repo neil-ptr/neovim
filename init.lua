@@ -725,8 +725,8 @@ require('conform').setup {
     python = { 'black', 'isort' },
     json = { 'fixjson' },
     -- Use a sub-list to run only the first available formatter
-    javascript = { { 'dprint', 'prettierd' } },
-    typescript = { { 'dprint', 'prettierd' } },
+    javascript = { 'dprint', 'prettierd', 'eslint_d' },
+    typescript = { 'dprint', 'prettierd', 'eslint_d' },
     jsx = { { 'dprint', 'prettierd' } },
     typescriptreact = { { 'dprint', 'prettierd' } },
     go = { 'gofmt', 'goimports', 'golines' },
