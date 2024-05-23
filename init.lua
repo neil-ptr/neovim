@@ -721,10 +721,8 @@ mason_lspconfig.setup_handlers {
 require('conform').setup {
   formatters_by_ft = {
     lua = { 'stylua' },
-    -- Conform will run multiple formatters sequentially
     python = { 'black', 'isort' },
     json = { 'fixjson' },
-    -- Use a sub-list to run only the first available formatter
     javascript = { 'dprint', 'prettierd', 'eslint_d' },
     typescript = { 'dprint', 'prettierd', 'eslint_d' },
     jsx = { { 'dprint', 'prettierd' } },
