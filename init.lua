@@ -433,6 +433,7 @@ require('telescope').setup {
       '--no-ignore-vcs',
     },
     file_ignore_patterns = {
+      '.erb',
       'node_modules',
       'build',
       'dist',
@@ -512,7 +513,7 @@ end, { desc = 'Refactor extract block to file' })
 ---@diagnostic disable-next-line: missing-fields
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'astro', 'css' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'astro', 'css', 'jsdoc' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
@@ -723,6 +724,7 @@ require('conform').setup {
     lua = { 'stylua' },
     python = { 'black', 'isort' },
     json = { 'fixjson' },
+    rust = { 'rustfmt' },
     javascript = { 'dprint', 'prettierd', 'eslint_d' },
     typescript = { 'dprint', 'prettierd', 'eslint_d' },
     jsx = { { 'dprint', 'prettierd' } },
