@@ -388,9 +388,8 @@ vim.keymap.set('v', '<leader>d', '"_d')
 -- Nvim.tree
 vim.api.nvim_set_keymap('n', '<Leader>t', ':Neotree toggle<CR>', { noremap = true, desc = 'Toggle file tree' })
 
--- next and prev buffers
-vim.api.nvim_set_keymap('n', '<C-,>', ':bprev<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-.>', ':bnext<CR>', { noremap = true, silent = true })
+-- buffer control binds
+vim.api.nvim_set_keymap('n', '<leader>bd', ':bd<CR>', { noremap = true, silent = true, desc = '[b]uffer [d]elete' })
 
 -- harpoon config
 local mark = require 'harpoon.mark'
