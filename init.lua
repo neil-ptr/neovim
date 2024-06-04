@@ -200,6 +200,7 @@ require('lazy').setup({
     },
   },
   { 'rose-pine/neovim', name = 'rose-pine', priority = 1000 },
+  { 'rebelot/kanagawa.nvim' },
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
@@ -347,6 +348,7 @@ vim.o.hidden = false
 -- vim.cmd("colorscheme oxocarbon")
 
 vim.cmd 'colorscheme rose-pine'
+-- vim.cmd 'colorscheme kanagawa'
 
 -- neotree colors
 -- vim.cmd 'hi NeoTreeNormal guibg=#1f1d2e'
@@ -636,14 +638,14 @@ vim.cmd [[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]]
 vim.cmd [[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
 
 local border = {
-  { '🭽', 'FloatBorder' },
-  { '▔', 'FloatBorder' },
-  { '🭾', 'FloatBorder' },
-  { '▕', 'FloatBorder' },
-  { '🭿', 'FloatBorder' },
-  { '▁', 'FloatBorder' },
-  { '🭼', 'FloatBorder' },
-  { '▏', 'FloatBorder' },
+  { '╭', 'FloatBorder' },
+  { '─', 'FloatBorder' },
+  { '╮', 'FloatBorder' },
+  { '│', 'FloatBorder' },
+  { '╯', 'FloatBorder' },
+  { '─', 'FloatBorder' },
+  { '╰', 'FloatBorder' },
+  { '│', 'FloatBorder' },
 }
 
 -- LSP settings (for overriding per client)
