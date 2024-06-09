@@ -243,11 +243,6 @@ require('lazy').setup({
     'kylechui/nvim-surround',
     version = '*', -- Use for stability; omit to use `main` branch for the latest features
     event = 'VeryLazy',
-    config = function()
-      require('nvim-surround').setup {
-        -- Configuration here, or leave empty to use defaults
-      }
-    end,
   },
   {
     -- Highlight, edit, and navigate code
@@ -273,9 +268,6 @@ require('lazy').setup({
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
     },
-    config = function()
-      require('refactoring').setup {}
-    end,
   },
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
@@ -347,8 +339,8 @@ vim.o.hidden = false
 -- vim.o.background = "dark" -- set this to dark or light
 -- vim.cmd("colorscheme oxocarbon")
 
-vim.cmd 'colorscheme rose-pine'
--- vim.cmd 'colorscheme kanagawa'
+-- vim.cmd 'colorscheme rose-pine'
+vim.cmd 'colorscheme kanagawa-wave'
 
 -- neotree colors
 -- vim.cmd 'hi NeoTreeNormal guibg=#1f1d2e'
@@ -634,8 +626,8 @@ local on_attach = function(_, bufnr)
   end, { desc = 'Format current buffer with LSP' })
 end
 
-vim.cmd [[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]]
-vim.cmd [[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
+-- vim.cmd [[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]]
+-- vim.cmd [[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
 
 local border = {
   { '╭', 'FloatBorder' },
