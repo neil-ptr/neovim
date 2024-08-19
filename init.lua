@@ -219,6 +219,14 @@ require('lazy').setup({
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
 
+  -- supermaven
+  {
+    'supermaven-inc/supermaven-nvim',
+    config = function()
+      require('supermaven-nvim').setup {}
+    end,
+  },
+
   -- Fuzzy Finder (files, lsp, etc)
   {
     'nvim-telescope/telescope.nvim',
@@ -339,8 +347,8 @@ vim.o.hidden = false
 -- vim.o.background = "dark" -- set this to dark or light
 -- vim.cmd("colorscheme oxocarbon")
 
--- vim.cmd 'colorscheme rose-pine'
-vim.cmd 'colorscheme kanagawa-wave'
+-- vim.cmd 'colorscheme rose-pine-moon'
+vim.cmd 'colorscheme kanagawa'
 
 -- neotree colors
 -- vim.cmd 'hi NeoTreeNormal guibg=#1f1d2e'
@@ -665,7 +673,6 @@ end
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
 local servers = {
-  -- clangd = {},
   gopls = {},
   pyright = {},
   rust_analyzer = {},
@@ -718,12 +725,15 @@ require('conform').setup {
     python = { 'black', 'isort' },
     json = { 'fixjson' },
     rust = { 'rustfmt' },
-    javascript = { 'dprint', 'prettierd', 'eslint_d' },
-    typescript = { 'dprint', 'prettierd', 'eslint_d' },
+    javascript = { { 'prettierd', 'eslint_d' } },
+    typescript = { { 'prettierd', 'eslint_d' } },
     jsx = { { 'dprint', 'prettierd' } },
     typescriptreact = { { 'dprint', 'prettierd' } },
     go = { 'gofmt', 'goimports', 'golines' },
     c = { 'clang-format' },
+    cpp = { 'clang-format' },
+    objcpp = { 'clang-format' },
+    objc = { 'clang-format' },
   },
 }
 
