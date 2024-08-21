@@ -201,6 +201,7 @@ require('lazy').setup({
   },
   { 'rose-pine/neovim', name = 'rose-pine', priority = 1000 },
   { 'rebelot/kanagawa.nvim' },
+  { 'EdenEast/nightfox.nvim' }, -- lazy
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
@@ -218,14 +219,6 @@ require('lazy').setup({
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
-
-  -- supermaven
-  {
-    'supermaven-inc/supermaven-nvim',
-    config = function()
-      require('supermaven-nvim').setup {}
-    end,
-  },
 
   -- Fuzzy Finder (files, lsp, etc)
   {
@@ -345,10 +338,8 @@ vim.o.termguicolors = true
 vim.o.hidden = false
 
 -- vim.o.background = "dark" -- set this to dark or light
--- vim.cmd("colorscheme oxocarbon")
-
--- vim.cmd 'colorscheme rose-pine-moon'
-vim.cmd 'colorscheme kanagawa'
+vim.cmd 'colorscheme nightfox'
+-- vim.cmd 'colorscheme kanagawa'
 
 -- neotree colors
 -- vim.cmd 'hi NeoTreeNormal guibg=#1f1d2e'
@@ -380,6 +371,15 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+-- Define a function to print the relative path of the current file
+local function print_relative_path()
+  local relative_path = vim.fn.expand '%'
+  print(relative_path)
+end
+
+-- Create a custom command to call the function
+vim.api.nvim_create_user_command('Prp', print_relative_path, {})
+
 -- paste without replacing register val
 vim.keymap.set('x', '<leader>p', '"_dP')
 
@@ -410,6 +410,12 @@ end, { desc = 'Harpoon nav to 3 file' })
 vim.keymap.set('n', '<C-s>', function()
   ui.nav_file(4)
 end, { desc = 'Harpoon nav to 4 file' })
+require('harpoon').setup {
+  menu = {
+    width = math.floor(vim.api.nvim_win_get_width(0) * 0.5),
+    height = math.floor(vim.api.nvim_win_get_height(0) * 0.5),
+  },
+}
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
@@ -730,10 +736,10 @@ require('conform').setup {
     jsx = { { 'dprint', 'prettierd' } },
     typescriptreact = { { 'dprint', 'prettierd' } },
     go = { 'gofmt', 'goimports', 'golines' },
-    c = { 'clang-format' },
-    cpp = { 'clang-format' },
-    objcpp = { 'clang-format' },
-    objc = { 'clang-format' },
+    c = { 'clang_format' },
+    cpp = { 'clang_format' },
+    objcpp = { 'clang_format' },
+    objc = { 'clang_format' },
   },
 }
 
