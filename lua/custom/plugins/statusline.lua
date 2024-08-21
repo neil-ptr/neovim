@@ -8,7 +8,7 @@ return {
   opts = {
     options = {
       icons_enabled = false,
-      theme = 'onedark',
+      theme = 'nord',
       section_separators = '',
     },
   },
