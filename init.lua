@@ -199,9 +199,8 @@ require('lazy').setup({
       'nvim-lua/plenary.nvim',
     },
   },
-  { 'rose-pine/neovim', name = 'rose-pine', priority = 1000 },
   { 'rebelot/kanagawa.nvim' },
-  { 'EdenEast/nightfox.nvim' }, -- lazy
+  { 'EdenEast/nightfox.nvim' },
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
@@ -237,6 +236,12 @@ require('lazy').setup({
         cond = function()
           return vim.fn.executable 'make' == 1
         end,
+      },
+      {
+        'nvim-telescope/telescope-live-grep-args.nvim',
+        -- This will not install any breaking changes.
+        -- For major updates, this must be adjusted manually.
+        version = '^1.0.0',
       },
     },
   },
@@ -486,6 +491,7 @@ vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { de
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').live_grep, { desc = '[S]earch by [F]iles with grep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
+vim.keymap.set('n', '<leader>sg', require('telescope').extensions.live_grep_args.live_grep_args, { desc = '[S]earch Raw Rip[G]rep' })
 
 -- refactoring
 vim.keymap.set('x', '<leader>rff', function()
