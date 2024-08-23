@@ -11,14 +11,14 @@ return {
     },
     sections = {
       lualine_a = { { 'mode', icon = '\u{e62b}' } },
-      lualine_b = { 'filename', 'branch', 'diff' },
+      lualine_b = { { 'branch', icon = '' }, 'diff' },
       lualine_c = {
-        '%=', --[[ add your center compoentnts here in place of this comment ]]
+        'filename',
       },
       lualine_x = {},
-      lualine_y = { 'diagnostics', 'filetype', { 'progress', icon = '\u{f016b}' } },
+      lualine_y = { 'diagnostics', 'filetype', { 'progress', icon = '󰈙' } },
       lualine_z = {
-        { 'location', left_padding = 2 },
+        { 'location', icon = '' },
       },
     },
     inactive_sections = {
