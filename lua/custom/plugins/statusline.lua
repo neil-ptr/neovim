@@ -11,10 +11,8 @@ return {
     },
     sections = {
       lualine_a = { { 'mode', icon = '\u{e62b}' } },
-      lualine_b = { { 'branch', icon = '' }, 'diff' },
-      lualine_c = {
-        'filename',
-      },
+      lualine_b = { { 'branch', icon = '' }, 'diff', 'filename' },
+      lualine_c = {},
       lualine_x = {},
       lualine_y = { 'diagnostics', 'filetype', { 'progress', icon = '󰈙' } },
       lualine_z = {

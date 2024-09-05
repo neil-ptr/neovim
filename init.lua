@@ -199,7 +199,6 @@ require('lazy').setup({
       'nvim-lua/plenary.nvim',
     },
   },
-  { 'rebelot/kanagawa.nvim' },
   { 'EdenEast/nightfox.nvim' },
   {
     -- Add indentation guides even on blank lines
@@ -755,6 +754,11 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     require('conform').format { bufnr = args.buf }
   end,
 })
+
+-- [[ commentstring ]]
+-- comment.nvim
+local ft = require 'Comment.ft'
+ft.set('objcpp', { '// %s', '/* %s */' })
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
