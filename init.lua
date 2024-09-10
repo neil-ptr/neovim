@@ -623,11 +623,11 @@ local on_attach = function(_, bufnr)
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-  -- purely for c/c++/objc/objcpp
-  nmap('gh', '<cmd>ClangdSwitchSourceHeader<CR>', '[G]oto [H]eader or source')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
   nmap('<leader>ss', require('telescope.builtin').lsp_document_symbols, 'Document [S]ymbol[s]')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  -- purely for c/c++/objc/objcpp
+  nmap('gs', '<cmd>ClangdSwitchSourceHeader<CR>', '[G]oto [S]ource or header')
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
