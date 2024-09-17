@@ -248,6 +248,11 @@ require('lazy').setup({
     'kylechui/nvim-surround',
     version = '*', -- Use for stability; omit to use `main` branch for the latest features
     event = 'VeryLazy',
+    config = function()
+      require('nvim-surround').setup {
+        -- Configuration here, or leave empty to use defaults
+      }
+    end,
   },
   {
     -- Highlight, edit, and navigate code
@@ -738,10 +743,10 @@ require('conform').setup {
     python = { 'black', 'isort' },
     json = { 'fixjson' },
     rust = { 'rustfmt' },
-    javascript = { { 'prettierd', 'eslint_d' } },
-    typescript = { { 'prettierd', 'eslint_d' } },
-    jsx = { { 'dprint', 'prettierd' } },
-    typescriptreact = { { 'dprint', 'prettierd' } },
+    javascript = { 'prettierd', 'eslint_d' },
+    typescript = { 'prettierd', 'eslint_d' },
+    jsx = { 'dprint', 'prettierd' },
+    typescriptreact = { 'dprint', 'prettierd' },
     go = { 'gofmt', 'goimports', 'golines' },
     c = { 'clang_format' },
     cpp = { 'clang_format' },
