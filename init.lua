@@ -85,6 +85,13 @@ require('lazy').setup({
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
+    -- opts = {
+    --   servers = {
+    --     sourcekit = {
+    --       cmd = {'/Library/Developer/CommandLineTools/usr/bin/sourcekit-lsp'},
+    --     },
+    --   },
+    -- },
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
       { 'williamboman/mason.nvim', config = true },
@@ -192,6 +199,9 @@ require('lazy').setup({
         'nvim-lua/plenary.nvim',
       },
     },
+  },
+  {
+    'ThePrimeagen/git-worktree.nvim',
   },
   {
     'ThePrimeagen/harpoon',
@@ -602,6 +612,9 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 
 -- lazy git
 vim.api.nvim_set_keymap('n', '<leader>gg', ':LazyGit<CR>', { silent = true, desc = 'LazyGit' })
+
+-- git worktree
+vim.keymap.set('n', '<leader>gw', require('telescope').extensions.git_worktree.git_worktrees, { desc = '[G]it [W]orktree' })
 
 -- TODO: git diff view
 
