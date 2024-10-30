@@ -46,9 +46,11 @@ vim.api.nvim_set_keymap('n', '<C-u>', '<C-u>zz', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', { noremap = true })
 vim.cmd 'set relativenumber number'
 
--- Change the cursor color to hot pink
--- vim.wo.cursorline = true
--- vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#ffffff', bg = '#5f87af', bold = true })
+-- center also clears highlights
+vim.api.nvim_set_keymap('n', 'zz', 'zz:noh<CR>', { noremap = true, silent = true })
+
+-- highlight cursor line
+vim.wo.cursorline = true
 
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
@@ -712,6 +714,7 @@ local servers = {
   prismals = {},
   jsonls = {},
   cssls = {},
+  eslint = {},
   tailwindcss = {},
   zls = {},
   astro = { filetypes = { 'astro' } },
@@ -756,10 +759,10 @@ require('conform').setup {
     python = { 'black', 'isort' },
     json = { 'fixjson' },
     rust = { 'rustfmt' },
-    javascript = { 'prettier', 'prettierd', 'eslint_d' },
-    typescript = { 'prettier', 'prettierd', 'eslint_d' },
-    jsx = { 'dprint', 'prettierd' },
-    typescriptreact = { 'dprint', 'prettierd' },
+    javascript = { 'dprint', 'prettierd', 'eslint_d' },
+    typescript = { 'dprint', 'prettierd', 'eslint_d' },
+    jsx = { 'dprint', 'prettierd', 'eslint_d' },
+    typescriptreact = { 'dprint', 'prettierd', 'eslint_d' },
     go = { 'gofmt', 'goimports', 'golines' },
     c = { 'clang_format' },
     cpp = { 'clang_format' },
@@ -768,7 +771,7 @@ require('conform').setup {
     html = { 'superhtml' },
   },
   format_on_save = {
-    timeout_ms = 1000,
+    timeout_ms = 2000,
   },
 }
 
